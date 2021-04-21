@@ -52,7 +52,7 @@ io.on('connection',socket=>{
 
     socket.join(user.room)
 
-    socket.emit('message','welcome to chat cord')
+    socket.emit('message',`${user.username} welcome to chat cord ${user.room}`)
   
     // Broadcasts when user connections
     socket.broadcast.to(user.room).emit('message',`${user.username} has joined the chatroom ${user.room}`)
@@ -63,7 +63,8 @@ io.on('connection',socket=>{
 
   
   socket.on('chatmessage',msg=>{
-    io.emit('message',msg)
+    const user = getCurrentUser(socket.id)
+    io.to(user.room).emit('message',msg)
     console.log(msg)
   })
   
