@@ -1,15 +1,81 @@
+// const express = require("express");
+// const app = express();
+// const server = require("http").createServer(app);
+// const io = require("socket.io")(server);
+// const port = 3000;
+
+// io.on('connection',socket=>{
+//   console.log('a user connected');
+
+//   socket.join('some room');
+
+//   io.to('some room').emit('some event','hello room');
+
+
+//   socket.on('join room',room=>{
+//     socket.to(room).emit("room joined","rooom joineed");
+//   });
+
+//   socket.on('message',({room,message})=>{
+//     socket.to(room).emit('message',message)
+//     console.log(message)
+//   })
+
+//   socket.on('chat message',msg=>{
+//     console.log(msg)
+//     io.emit('chat message', msg);
+//   });
+// });
+
+// server.listen(process.env.PORT||port,()=> console.log(`server running on port ${port}`) );
+
+
+
+
 const express = require("express");
+const path = require("path")
+const http = require('http')
+const socketio = require("socket.io")
+const {userJoin,getCurrentUser}= require('./users')
+
 const app = express();
-const server = require("http").createServer(app);
-const io = require("socket.io")(server);
+const server = http.createServer(app)
+const io = socketio(server);
+
 const port = 3000;
 
+
 io.on('connection',socket=>{
-  console.log('a user connected');
-  socket.on('chat message',msg=>{
+  console.log('new ws connection')
+  socket.on('joinRoom',({username,room})=>{
+    const user = userJoin(socket.id,username,room)
+
+    socket.join(user.room)
+
+    socket.emit('message','welcome to chat cord')
+  
+    // Broadcasts when user connections
+    socket.broadcast.to(user.room).emit('message',`${user.username} has joined the chat`)
+
+  })
+
+
+
+  
+  socket.on('chatmessage',msg=>{
+    io.emit('message',msg)
     console.log(msg)
-    io.emit('chat message', msg);
-  });
-});
+  })
+  
+  //runs when client disconnects
+
+  socket.on('disconnect',()=>{
+    io.emit('message','a user has left the chat')
+    console.log('user disconnected')
+  })
+
+})
+
+
 
 server.listen(process.env.PORT||port,()=> console.log(`server running on port ${port}`) );
