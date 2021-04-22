@@ -55,7 +55,7 @@ io.on('connection',socket=>{
     socket.emit('message',`${user.username} welcome to chat cord ${user.room}`)
   
     // Broadcasts when user connections
-    socket.broadcast.to(user.room).emit('message',`${user.username} has joined the chatroom ${user.room}`)
+    // socket.broadcast.to(user.room).emit('message',`${user.username} has joined the chatroom ${user.room}`)
 
   })
 
