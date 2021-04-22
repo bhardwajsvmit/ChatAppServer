@@ -36,7 +36,7 @@ const express = require("express");
 const path = require("path")
 const http = require('http')
 const socketio = require("socket.io")
-const {userJoin,getCurrentUser}= require('./users')
+const { userJoin, getCurrentUser, userLeave }= require('./users')
 
 const app = express();
 const server = http.createServer(app)
@@ -71,7 +71,7 @@ io.on('connection',socket=>{
   //runs when client disconnects
 
   socket.on('disconnect',()=>{
-    io.emit('message','a user has left the chat')
+
     console.log('user disconnected')
   })
 
