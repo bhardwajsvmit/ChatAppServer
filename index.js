@@ -71,7 +71,7 @@ io.on('connection',socket=>{
   //runs when client disconnects
 
   socket.on('disconnect',()=>{
-    const user = userLeave(socket.id)
+    // const user = userLeave(socket.id)
 
     // if(user){
 
