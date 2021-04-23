@@ -51,7 +51,7 @@ io.on('connection',socket=>{
     const user = userJoin(socket.id,username,room)
 
     socket.join(user.room)
-
+    console.log(`${user.username} joined ${user.room}`)
     // socket.emit('message',`${user.username} welcome to chat cord ${user.room}`)
   
     // Broadcasts when user connections
