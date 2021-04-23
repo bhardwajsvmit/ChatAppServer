@@ -52,7 +52,7 @@ io.on('connection',socket=>{
 
     socket.join(user.room)
 
-    socket.emit('message',`${user.username} welcome to chat cord ${user.room}`)
+    // socket.emit('message',`${user.username} welcome to chat cord ${user.room}`)
   
     // Broadcasts when user connections
     // socket.broadcast.to(user.room).emit('message',`${user.username} has joined the chatroom ${user.room}`)
@@ -73,10 +73,10 @@ io.on('connection',socket=>{
   socket.on('disconnect',()=>{
     const user = userLeave(socket.id)
 
-    if(user){
+    // if(user){
 
-      io.to(user.room).emit('message',` ${user.username} has left the chat`)
-    }
+    //   io.to(user.room).emit('message',` ${user.username} has left the chat`)
+    // }
 
     console.log('user disconnected')
   })
