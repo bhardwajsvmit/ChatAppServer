@@ -71,14 +71,15 @@ io.on('connection',socket=>{
   //runs when client disconnects
 
   socket.on('disconnect',()=>{
-    // const user = userLeave(socket.id)
+    const user = userLeave(socket.id)
 
-    // if(user){
+    if(user){
 
-    //   io.to(user.room).emit('message',` ${user.username} has left the chat`)
-    // }
+      // io.to(user.room).emit('message',` ${user.username} has left the chat`)
 
-    console.log('user disconnected')
+      console.log('user disconnected')
+    }
+
   })
 
 })
